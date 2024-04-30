@@ -14,5 +14,5 @@ entity mux2 is
 
 architecture arch of mux2 is
 begin:
-  X <= A when (SEL = '0') else B;
+  S <= A when (COM = '0') else B;
 end arch;
