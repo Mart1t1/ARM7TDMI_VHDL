@@ -10,7 +10,7 @@ entity REGBUS is
         A, B    : out std_logic_vector(31 downto 0);
         RA, RB  : in std_logic_vector(3 downto 0);
         RW      : in std_logic_vector(3 downto 0);
-        WE      : in std_logic;
+        WE      : in std_logic
     );
 end REGBUS;
 
@@ -32,15 +32,15 @@ architecture arch of REGBUS is
     signal Banc : table := init_banc;
 
 begin
-    process(Clk, Reset, RA, RB)
+    A <= Banc(to_integer(unsigned(RA)));
+    B <= Banc(to_integer(unsigned(RB)));
+    process(Clk, Reset)
     begin
-        A <= Banc(unsigned(RA));
-        B <= Banc(unsigned(RB));
         if Reset = '1' then
-            Banc := init_banc;
+            Banc <= init_banc;
         elsif rising_edge(Clk) then
             if WE = '1' then
-                Banc(unsigned(RW)) <= W;
+                Banc(to_integer(unsigned(RW))) <= W;
             end if;
         end if;
     end process;
