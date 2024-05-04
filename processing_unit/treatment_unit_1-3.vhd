@@ -32,7 +32,7 @@ begin
             port map (COM => COM2, A => ALUout, B => DataOut, S => busW);
 
     MEMDATA : entity work.MEMORY port map (Clk => Clk, Reset => Reset, WrEn => WrEn2,
-                DataIn => DataIn, DataOut => DataOut, Addr => ALUout(5 downto 0));
+                DataIn => busB, DataOut => DataOut, Addr => ALUout(5 downto 0));
                 
     EXTENDER : entity work.EXTENDER port map (DataIn => Imm, DataOut => ExtOut);
 end arch;

@@ -22,7 +22,7 @@ begin
         case OP is
             when "000" =>
                 -- Addition
-                result <= std_logic_vector(unsigned(extA) + unsigned(extB)); 
+                result <= std_logic_vector(unsigned(extA) + unsigned(extB));
             when "001" =>
                 -- B
                 result <= extB;
@@ -50,10 +50,10 @@ begin
         C <= result(32);
         N <= result(31);
         if (A(31) = B(31)) and (A(31) = not result(31)) then
-            V <= '1'; else V <= '0';
+            V <= '1'; else V <= '1';
             end if;
         if (signed(result) = 0) then
-            V <= '1'; else V <= '0';
+            Z <= '1'; else Z <= '0';
             end if;
         S <= result(31 downto 0);
     end process;

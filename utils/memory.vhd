@@ -7,7 +7,7 @@ entity MEMORY is
     Clk, Reset, WrEn: in std_logic;
     DataIn: in std_logic_vector(31 downto 0);
     DataOut: out std_logic_vector(31 downto 0);
-    Addr: std_logic_vector(5 downto 0); -- Input AND OUTPUT
+    Addr: std_logic_vector(5 downto 0) -- Input AND OUTPUT
 );
 end MEMORY;
 
@@ -26,14 +26,14 @@ architecture arch of MEMORY is
     signal MEMORY_ARRAY: table := init_MEMORY;
 
   begin
-    process(Clk, Reset, WrEn, Addr)
+    DataOut <= MEMORY_ARRAY(to_integer(unsigned(Addr)));
+    process(Clk, Reset)
     begin
-      DataOut <= MEMORY_ARRAY(to_integer(unsigned(Addr));
       if Reset = '1' then
-        MEMORY_ARRAY := init_MEMORY;
+        MEMORY_ARRAY <= init_MEMORY;
       elsif rising_edge(Clk) then
         if WrEn = '1' then
-          MEMORY_ARRAY(to_integer(unsigned(Addr)) <= DataIn;
+          MEMORY_ARRAY(to_integer(unsigned(Addr))) <= DataIn;
         end if;
       end if;
     end process;

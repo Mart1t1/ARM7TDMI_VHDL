@@ -1,9 +1,9 @@
 vlib work
 
-vcom -93 ../alu.vhd
-vcom -93 ../reg_bus.vhd
-vcom -93 ../treatment_unit.vhd 
-vcom -93 treatment_unit_tb.vhd
+vcom -2008 ../alu.vhd
+vcom -2008 ../reg_bus.vhd
+vcom -2008 ../treatment_unit_1-2.vhd 
+vcom -2008 treatment_unit_tb_1-2.vhd
 
 vsim treatmnt_unit_tb(Bench)
 
