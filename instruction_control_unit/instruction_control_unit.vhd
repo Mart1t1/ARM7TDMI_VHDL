@@ -17,7 +17,7 @@ architecture arch of instruction_control_unit is
     signal selected : std_logic_vector(31 downto 0);
 begin
     -- make PC_unit with clock and input output
-    PC : entity work.pc_unit port map(PC_in => selected, PC_out => PC, Clk => Clk, Reset => Reset);
+    PC_unit : entity work.pc_unit port map(PC_in => selected, PC_out => PC, Clk => Clk, Reset => Reset);
     -- make PCSel_unit with input(PC, Offset_Ext) output(selected)
     PC_selection : entity work.pc_selection_unit port map(Offset => Offset_ext, PC => PC,
                 PC_selected => selected, nPCsel => nPCsel);
