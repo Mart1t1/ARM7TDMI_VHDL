@@ -4,10 +4,10 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity BReg is
   port(
-    DataIN    : in std_logic_vector(32 downto 0);
+    DataIN    : in std_logic_vector(31 downto 0);
     Rst, Clk  : in std_logic;
     WE        : in std_logic;
-    DataOUT   : out std_logic_vector(32 downto 0);
+    DataOUT   : out std_logic_vector(31 downto 0)
 );
 end BReg;
 

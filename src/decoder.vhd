@@ -7,7 +7,8 @@ entity decoder is
         Instruction : in std_logic_vector(31 downto 0);
         PSR : in std_logic_vector(31 downto 0);
         nPCSel, RegWr, RegSel, ALUSrc, RegAff, MemWr, 
-            ALUCtr, PSREn, WrSrc : out std_logic;
+            PSREn, WrSrc : out std_logic;
+        ALUCtr : out std_logic_vector(2 downto 0)
     );
 end decoder;
 
@@ -18,35 +19,35 @@ begin
     process(Instruction)
     begin
         if Instruction(27 downto 26) = "00" then            -- instruction de traitement
-            if Instruction(24 downto 21) = "0101" then      -- ADD
+            if Instruction(24 downto 21) = "0100" then      -- ADD
                 if Instruction(25) = '1' then               -- ADDi
-                    instr_courante <= ADDi
+                    instr_courante <= ADDi;
                 else                                        -- ADDr
-                    instr_courante <= ADDr
+                    instr_courante <= ADDr;
                 end if;
             elsif Instruction(24 downto 21) = "1101" then   -- MOV
-                instr_courante <= MOV
+                instr_courante <= MOV;
             else -- Instruction(24 downto 21) = "1010"      -- CMP
-                instr_courante <= CMP
+                instr_courante <= CMP;
             end if;
         elsif Instruction(27 downto 26) = "01" then         -- instruction de transfert
             if Instruction(20) = '1' then                   -- LDR
-                instr_courante <= LDR
+                instr_courante <= LDR;
             else                                            -- STR
-                instr_courante <= STR
+                instr_courante <= STR;
             end if;
         elsif Instruction(27 downto 25) = "101" then        -- instruction de branchement relatif                                              -- 
             if Instruction(31 downto 28) = "1110" then      -- BAL
-                instr_courante <= BAL
+                instr_courante <= BAL;
             else -- Instruction(31 downto 28) = "1011"      -- BLT
-                instr_courante <= BLT
+                instr_courante <= BLT;
             end if;
         end if;
     end process;
 
-    process(Instruction, instruction_courante)
+    process(Instruction, instr_courante)
     begin
-        case instruction_courante
+        case instr_courante is
         when MOV => 
             nPCSel <= '0';
             RegWr <= '1';
@@ -114,7 +115,7 @@ begin
             ALUSrc <= '0';
             RegAff <= '0'; 
             MemWr <= '0';
-            ALUCtr <= '0';
+            ALUCtr <= "000";
             PSREn <= '0';
             WrSrc <= '0';
         when BLT =>
@@ -128,7 +129,7 @@ begin
             ALUSrc <= '0';
             RegAff <= '0'; 
             MemWr <= '0';
-            ALUCtr <= '0';
+            ALUCtr <= "000";
             PSREn <= '0';
             WrSrc <= '0';
         end case;

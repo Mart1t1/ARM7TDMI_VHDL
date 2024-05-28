@@ -19,7 +19,7 @@ architecture arch of control_unit is
     signal BusMem : std_logic_vector(31 downto 0);
     signal nPCSel, RegWr, RegSel, ALUSrc, RegAff, MemWr,
         PSREn, WrSrc : std_logic;
-    signal ALUCtr : std_logic_vector(3 downto 0);
+    signal ALUCtr : std_logic_vector(2 downto 0);
     signal RegMuxOut : std_logic_vector(3 downto 0); -- output of Rm/Rd mux
     -- sub signals
     alias Rd : std_logic_vector(3 downto 0) is Instruction(15 downto 12); 
@@ -28,7 +28,7 @@ architecture arch of control_unit is
     alias Imm24 : std_logic_vector(23 downto 0) is Instruction(23 downto 0);
     alias Imm8 : std_logic_vector(7 downto 0) is Instruction(7 downto 0);
 begin
-    D : entity work.decoder port map(Instruction => Instruction, PSR => OutPSR
+    D : entity work.decoder port map(Instruction => Instruction, PSR => OutPSR,
         nPCSel => nPCSel, RegWr => RegWr, RegSel => RegSel, ALUSrc => ALUSrc, RegAff => RegAff,
         MemWr => MemWr, PSREn => PSREn, WrSrc => WrSrc, ALUCtr => ALUCtr);
     
@@ -41,7 +41,7 @@ begin
     RegBench : entity work.REGBUS port map(Clk => Clk, Reset => Reset, W => BusW, A => BusA, B => BusB,
         WE => RegWr, RW => Rd, RA => Rn, RB => RegMuxOut);
 
-    ImmExtender : entity work.EXTENDER port map(DataIn => Imm8, DataOut = > ImmExt);
+    ImmExtender : entity work.EXTENDER port map(DataIn => Imm8, DataOut => ImmExt);
 
     ALU : entity work.ALU port map(OP => ALUCtr, A => BusA, B => BusALU, S => BusRes, N => FlagsNCVZ(31),
         C => FlagsNCVZ(30), V => FlagsNCVZ(29), Z => FlagsNCVZ(28));
@@ -50,7 +50,7 @@ begin
 
     RegAff_unit : entity work.BReg port map(Clk => Clk, Rst => Reset, WE => RegAff, DataIN => BusB, DataOUT => Afficheur);
 
-    Mem : entity work.MEMORY port map(Clk => Clk, Reset => Reset, WrEn => MemWr, DataIn => BusB, DataOut => BusMem, Addr => BusRes);
+    Mem : entity work.MEMORY port map(Clk => Clk, Reset => Reset, WrEn => MemWr, DataIn => BusB, DataOut => BusMem, Addr => BusRes(5 downto 0));
 
     Instruction_unit : entity work.instruction_control_unit port map(Clk => Clk, Reset => Reset, Offset => Imm24, nPCsel => nPCSel, Instruction => Instruction);
 
