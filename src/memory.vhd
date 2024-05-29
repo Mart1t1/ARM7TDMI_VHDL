@@ -19,6 +19,9 @@ architecture arch of MEMORY is
   begin
     for i in 63 downto 0 loop
       cleanROM(i) := (others => '0');
+    end loop; 
+    for i in 42 downto 32 loop
+      cleanROM(i) := "00000000000000000000000000001001";
     end loop;
     return cleanROM;
   end init_MEMORY;
