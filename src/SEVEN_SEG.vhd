@@ -55,6 +55,12 @@ begin
     when x"7" => sevseg <= "1110000";
     when x"8" => sevseg <= "1111111";
     when x"9" => sevseg <= "1111011";
+	 when x"A" => sevseg <= "1110111";
+	 when x"B" => sevseg <= "0111101";
+	 when x"C" => sevseg <= "1001110";
+	 when x"D" => sevseg <= "0011111";
+	 when x"E" => sevseg <= "0011111";
+	 when x"F" => sevseg <= "0001111";
 	 when others => sevseg <= "0000000";
 	end case;
   if Pol = '1' then
